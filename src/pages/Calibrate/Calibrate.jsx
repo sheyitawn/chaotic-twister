@@ -1,30 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import MatDisplay from '../components/MatDisplay';
-import { connectToMat, onCirclePress, disconnectMat } from '../services/matWebsocket';
+import MatDisplay from '../../components/MatDisplay';
+import { connectToMat, startCalibrationMode, onCirclePress, disconnectMat } from '../../services/matWebsocket';
 import './calibrate.css';
 
 function Calibrate() {
   const [activeCircles, setActiveCircles] = useState([]);
 
-  useEffect(() => {
+ useEffect(() => {
   connectToMat();
+  startCalibrationMode(); // 🧠 Switch mode
 
-  const handleNewCircle = (index) => {
-    setActiveCircles((prev) => {
-      // If reset happened, allow this again
-      if (!prev.includes(index)) {
-        return [...prev, index];
-      }
-      return prev;
-    });
-  };
+  onCirclePress((index) => {
+    setActiveCircles((prev) =>
+      prev.includes(index) ? prev : [...prev, index]
+    );
+  });
 
-  onCirclePress(handleNewCircle);
-
-  return () => {
-    disconnectMat();
-  };
+  return () => disconnectMat();
 }, []);
+
 
 
   const handleReset = () => {

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { usePlayers } from '../../context/PlayerContext';
+import { connectToMat, onMatResult, sendColourToMat } from '../../services/matWebsocket';
 import './play.css';
 
 const bodyParts = ["Right Hand", "Left Hand", "Right Foot", "Left Foot"];
@@ -12,43 +13,73 @@ const getRandomInstruction = () => {
 };
 
 function Play() {
-  const location = useLocation();
-  const numPlayers = location.state?.players || 1;
-
+  const { numPlayers } = usePlayers();
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [instruction, setInstruction] = useState('');
   const [countdown, setCountdown] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [result, setResult] = useState('');
+
 
   const nextPlayer = () => {
     setCurrentPlayer((prev) => (prev % numPlayers) + 1);
+    
   };
 
+  useEffect(() => {
+    console.log("🎮 New current player:", currentPlayer);
+    console.log("🚀 ~ nextPlayer ~ numPlayers:", numPlayers)
+  }, [currentPlayer]);
+
+
   const startCountdown = () => {
-    setCountdown(6);
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          console.log("Time's up! Shock the player.");
-          nextPlayer();
-          return 0;
-        }
-        return prev - 1;
-      });
+    let count = 2;
+    setCountdown(count);
+
+    const interval = setInterval(() => {
+      count--;
+      setCountdown(count);
+
+      if (count <= 0) {
+        clearInterval(interval);
+        nextPlayer();
+      }
     }, 1000);
   };
 
+
   const spin = () => {
+
     setIsSpinning(true);
     setInstruction('Spinning...');
+    setResult('');
+
     setTimeout(() => {
       const newInstruction = getRandomInstruction();
       setInstruction(newInstruction);
+
+      // Extract color and send to Arduino
+      const colorWord = newInstruction.split(' on ')[1]; // "Red"
+      let colorChar = colorWord[0].toUpperCase();        // "R"
+      sendColourToMat(colorChar);
+      console.log("📤 Sent to Arduino:", colorChar);
+
       startCountdown();
       setIsSpinning(false);
+
     }, 1000);
   };
+
+  useEffect(() => {
+    connectToMat();
+
+    onMatResult((result) => {
+      if (result === 'SAFE') setResult('✅ SAFE!');
+      if (result === 'MISSED') setResult('💀 MISSED!');
+    });
+  }, []);
+
+
 
   return (
     <div className="play-container">
@@ -64,6 +95,13 @@ function Play() {
         <div className="play-countdown">{countdown}</div>
       )}
 
+      {result && (
+        <div className="play-result">
+          {result}
+        </div>
+      )}
+
+
       <button
         onClick={spin}
         disabled={isSpinning || countdown > 0}
@@ -71,6 +109,8 @@ function Play() {
       >
         {isSpinning ? 'Spinning...' : 'SPIN'}
       </button>
+
+      
     </div>
   );
 }
