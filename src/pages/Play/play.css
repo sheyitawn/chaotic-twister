@@ -1,47 +1,56 @@
 .play-container {
-    min-height: 100vh;
-    background-color: #fef9c3;
+    height: 100vh;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    /* padding: 2rem; */
   }
   
   .play-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1.5rem;
-    color: #b91c1c;
+    margin: 0;
+    margin-bottom: .3rem;
+    /* color: #b91c1c; */
   }
   
   .play-player {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin-bottom: 1rem;
+    font-weight: bold;
   }
   
   .play-instruction {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: .2rem;
+
   }
   
   .play-countdown {
-    font-size: 4rem;
+    font-size: 3rem;
     color: #dc2626;
     font-weight: bold;
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
+  }
+
+  .play-buttons {
+    width: 10rem;
   }
   
   .play-button {
-    font-size: 1.25rem;
     background-color: #ef4444;
-    color: white;
     padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    background-color: #10b981;
+    color: white;
     border: none;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s ease;
+    border-radius: 6px;
     cursor: pointer;
+    width: 100%;
+    margin-top: 2rem;
   }
   
   .play-button:hover {
@@ -52,4 +61,21 @@
     background-color: #9ca3af;
     cursor: not-allowed;
   }
-  
+  .back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #e5e7eb;
+}

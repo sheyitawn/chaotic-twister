@@ -21,32 +21,40 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1 className="home-title">Chaotic Twister</h1>
+      <h1 className="home-title">CHAOTIC TWISTER</h1>
 
-      <label className="home-label">Number of Players:</label>
-      <select
-        value={numPlayers}
-        onChange={handleChange}
-        className="home-select"
-      >
-        {[1, 2, 3, 4, 5].map(n => (
-          <option key={n} value={n}>{n}</option>
-        ))}
-      </select>
+      <div className="home-buttons">
+        <button
+          onClick={handleStart}
+          className="home-button play"
+        >
+          Play
+        </button>
 
-      <button
-        onClick={handleStart}
-        className="home-button play"
-      >
-        Play
-      </button>
+        <button
+          onClick={() => navigate('/calibrate')}
+          className="home-button calibrate"
+        >
+          Calibrate
+        </button>
+      </div>
+      
 
-      <button
-        onClick={() => navigate('/calibrate')}
-        className="home-button calibrate"
-      >
-        Calibrate
-      </button>
+      <div className='home-footer'>
+        <p className="home-label">PLAYERS:</p>
+        <select
+          value={numPlayers}
+          onChange={handleChange}
+          className="home-select"
+        >
+          {[1, 2, 3, 4, 5].map(n => (
+            <option key={n} value={n}>{n}</option>
+          ))}
+        </select>
+      </div>
+      
+
+
     </div>
   );
 }

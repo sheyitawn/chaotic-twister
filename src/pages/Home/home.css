@@ -1,30 +1,59 @@
 .home-container {
-  min-height: 100vh;
-  background-color: #fecaca; /* light red */
+  height: 100vh;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  /* padding: 2rem; */
 }
 
 .home-title {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 2rem;
-  color: #7f1d1d;
+  /* color: #7f1d1d; */
 }
 
 .home-label {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .home-select {
   font-size: 1rem;
-  padding: 0.5rem;
-  border-radius: 6px;
-  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #3b82f6; /* Tailwind blue-500 */
+  background-color: #f9fafb; /* light gray */
+  color: #111827; /* text-slate-900 */
+  appearance: none;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  min-width: 100px;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%233b82f6' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+
+}
+
+.home-select:hover {
+  border-color: #2563eb; /* blue-600 */
+}
+
+.home-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* subtle blue glow */
+}
+
+
+.home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .home-button {
@@ -35,20 +64,21 @@
   margin-bottom: 1rem;
   color: white;
   cursor: pointer;
-}
-
-.home-button.play {
-  background-color: #10b981;
-}
-
-.home-button.play:hover {
-  background-color: #059669;
+  width: 100%;
 }
 
 .home-button.calibrate {
-  background-color: #3b82f6;
+  background-color: #10b981;
 }
 
 .home-button.calibrate:hover {
+  background-color: #059669;
+}
+
+.home-button.play {
+  background-color: #3b82f6;
+}
+
+.home-button.play:hover {
   background-color: #2563eb;
 }

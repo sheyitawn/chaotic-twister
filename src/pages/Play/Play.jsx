@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePlayers } from '../../context/PlayerContext';
 import { connectToMat, onMatResult, sendColourToMat } from '../../services/matWebsocket';
 import './play.css';
+import Spinner from '../../components/Spinner/Spinner';
 
 const bodyParts = ["Right Hand", "Left Hand", "Right Foot", "Left Foot"];
 const colors = ["Red", "Yellow", "Green", "Blue"];
@@ -19,6 +21,9 @@ function Play() {
   const [countdown, setCountdown] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState('');
+  const [spinnerResult, setSpinnerResult] = useState(null);
+
+  const navigate = useNavigate();
 
 
   const nextPlayer = () => {
@@ -83,33 +88,77 @@ function Play() {
 
   return (
     <div className="play-container">
+      <button className="back-button" onClick={() => navigate('/')}>
+        ←
+      </button>
+
       <h1 className="play-title">CHAOTIC TWISTER</h1>
-
-      <p className="play-player">Player {currentPlayer}'s turn</p>
-
-      <div className="play-instruction">
-        {instruction || 'Press SPIN to start'}
-      </div>
+        <div className="play-instruction">
+          {instruction || 'Press SPIN to start!'}
+        </div>
+      
+      
 
       {countdown > 0 && (
         <div className="play-countdown">{countdown}</div>
       )}
 
-      {result && (
+      {/* {result && (
         <div className="play-result">
           {result}
         </div>
-      )}
+      )} */}
+
+      {/* <Spinner onSpinComplete={(result) => {
+        console.log('🎯 Spinner landed on:', result);
+        // result = { bodyPart: "Right Hand", color: "Green" }
+      }} /> */}
 
 
-      <button
-        onClick={spin}
-        disabled={isSpinning || countdown > 0}
-        className={`play-button ${isSpinning || countdown > 0 ? 'disabled' : ''}`}
-      >
-        {isSpinning ? 'Spinning...' : 'SPIN'}
-      </button>
+      <Spinner
+        onSpinComplete={(result) => {
+          console.log('🎯 Spinner landed on:', result);
 
+          // Show instruction
+          const instructionText = `${result.bodyPart} on ${result.color}`;
+          setInstruction(instructionText);
+          setSpinnerResult(result);
+          setResult('');
+
+          // Send color to Arduino
+          const colorChar = result.color[0].toUpperCase(); // R, G, B, Y
+          sendColourToMat(colorChar);
+          console.log("📤 Sent to Arduino:", colorChar);
+
+          // Start countdown
+          startCountdown();
+        }}
+      />
+
+      {/* {spinnerResult && (
+        <p className="play-instruction">
+          🎲 {spinnerResult.bodyPart} on {spinnerResult.color}
+        </p>
+      )} */}
+
+
+
+
+
+      {/* <div className="play-buttons">
+        <button
+          onClick={spin}
+          disabled={isSpinning || countdown > 0}
+          className={`play-button ${isSpinning || countdown > 0 ? 'disabled' : ''}`}
+        >
+          {isSpinning ? 'Spinning...' : 'SPIN'}
+        </button>
+
+      </div> */}
+
+      <p className="play-player">Player {currentPlayer}'s turn</p>
+
+      
       
     </div>
   );

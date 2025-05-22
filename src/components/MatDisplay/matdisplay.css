@@ -2,13 +2,16 @@
   display: grid;
   grid-template-columns: repeat(6, 60px);
   gap: 1rem;
+  margin-top: 2rem;
+  padding: 2rem;
+  border: #9ca3af solid 3px;
 }
 
 .mat-circle {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #d1d5db;
+  background-color: #dfe2e6;
   border: 2px solid #9ca3af;
   transition: background-color 0.3s ease;
 }
@@ -20,14 +23,14 @@
 
 /* Row-specific active colors */
 .row-0.active {
-  background-color: #10b981; /* green */
+  background-color: #92FF92; /* green */
 }
 .row-1.active {
-  background-color: #facc15; /* yellow */
+  background-color: #FFFCAA; /* yellow */
 }
 .row-2.active {
-  background-color: #ef4444; /* red */
+  background-color: #FFA2A2; /* red */
 }
 .row-3.active {
-  background-color: #3b82f6; /* blue */
+  background-color: #5BB0FF; /* blue */
 }

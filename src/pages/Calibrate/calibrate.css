@@ -1,40 +1,63 @@
 .calibrate-container {
-  min-height: 100vh;
-  background-color: #f3f4f6;
+  height: 100vh;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  justify-content: center;
 }
 
 .calibrate-title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin: 0rem;
 }
 
 .calibrate-description {
   font-size: 1rem;
   color: #555;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 .calibrate-buttons {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  width: 10rem;
 }
 
 .calibrate-buttons button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
   background-color: #10b981;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  width: 100%;
+  margin-top: 2rem;
 }
 
 .calibrate-buttons button:hover {
   background-color: #059669;
+}
+
+  .back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  transition: background-color 0.2s ease;
+}
+
+
+.back-button:hover {
+  background-color: #e5e7eb;
 }

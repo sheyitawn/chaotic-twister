@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import MatDisplay from '../../components/MatDisplay';
+import { useNavigate } from 'react-router-dom';
+import MatDisplay from '../../components/MatDisplay/MatDisplay';
 import { connectToMat, startCalibrationMode, onCirclePress, disconnectMat } from '../../services/matWebsocket';
 import './calibrate.css';
 
 function Calibrate() {
   const [activeCircles, setActiveCircles] = useState([]);
 
+  const navigate = useNavigate();
+  
  useEffect(() => {
   connectToMat();
-  startCalibrationMode(); // 🧠 Switch mode
+  startCalibrationMode();
 
   onCirclePress((index) => {
     setActiveCircles((prev) =>
@@ -28,14 +31,19 @@ function Calibrate() {
 
   return (
     <div className="calibrate-container">
-      <h2 className="calibrate-title">Mat Calibration</h2>
-      <p className="calibrate-description">Step on a circle to test pressure detection.</p>
+      <button className="back-button" onClick={() => navigate('/')}>
+        ←
+      </button>
+      <h2 className="calibrate-title">CALIBRATION</h2>
+      <p className="calibrate-description"><b>Step on a circle to test pressure detection.</b></p>
+
+      
+
+      <MatDisplay activeCircles={activeCircles} />
 
       <div className="calibrate-buttons">
         <button onClick={handleReset}>Reset</button>
       </div>
-
-      <MatDisplay activeCircles={activeCircles} />
     </div>
   );
 }
