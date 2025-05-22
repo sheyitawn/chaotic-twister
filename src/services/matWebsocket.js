@@ -58,3 +58,9 @@ export const disconnectMat = () => {
   resultListeners = [];
   circleListeners = [];
 };
+
+export const updateCurrentPlayer = (playerNumber) => {
+  if (socket?.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ type: 'updatePlayer', number: playerNumber }));
+  }
+};

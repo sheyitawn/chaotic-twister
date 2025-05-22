@@ -4,6 +4,7 @@ import { usePlayers } from '../../context/PlayerContext';
 import { connectToMat, onMatResult, sendColourToMat } from '../../services/matWebsocket';
 import './play.css';
 import Spinner from '../../components/Spinner/Spinner';
+import { updateCurrentPlayer } from '../../services/matWebsocket';
 
 const bodyParts = ["Right Hand", "Left Hand", "Right Foot", "Left Foot"];
 const colors = ["Red", "Yellow", "Green", "Blue"];
@@ -28,7 +29,8 @@ function Play() {
 
   const nextPlayer = () => {
     setCurrentPlayer((prev) => (prev % numPlayers) + 1);
-    
+    updateCurrentPlayer(currentPlayer);
+
   };
 
   useEffect(() => {
