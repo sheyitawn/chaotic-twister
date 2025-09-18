@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(6, 60px);
   gap: 1rem;
+  justify-content: center;
   margin-top: 2rem;
   padding: 2rem;
   border: #9ca3af solid 3px;
@@ -17,21 +18,14 @@
   transition: background-color 0.3s ease;
 }
 
-/* Default active state, will be overridden by row-specific ones */
+/* Override default active color with row-specific ones
 .mat-circle.active {
-  background-color: #34d399;
-}
+  border-color: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+} */
 
-/* Row-specific active colors */
-.row-0.active {
-  background-color: #92FF92; /* green */
-}
-.row-1.active {
-  background-color: #FFFCAA; /* yellow */
-}
-.row-2.active {
-  background-color: #FFA2A2; /* red */
-}
-.row-3.active {
-  background-color: #5BB0FF; /* blue */
-}
+/* Row-specific active background colors */
+.row-0.active { background-color: #92FF92; } /* Green - top */
+.row-1.active { background-color: #FFFCAA; } /* Yellow */
+.row-2.active { background-color: #FFA2A2; } /* Red */
+.row-3.active { background-color: #5BB0FF; } /* Blue - bottom */

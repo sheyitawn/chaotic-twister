@@ -1,11 +1,13 @@
 let socket;
 let resultListeners = [];
 let circleListeners = [];
+export const getSocket = () => socket;
 
 export const connectToMat = () => {
     if (socket && socket.readyState === WebSocket.OPEN) return;
 
     socket = new WebSocket('ws://localhost:4000');
+    window.socket = socket;
 
     socket.onmessage = (event) => {
   console.log("📨 WS message:", event.data);

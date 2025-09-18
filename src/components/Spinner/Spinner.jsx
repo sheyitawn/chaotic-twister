@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
 import './spinner.css';
 
-const bodyParts = ['Left Hand', 'Right Hand', 'Left Foot', 'Right Foot'];
-const colors = ['RED', 'GREEN', 'BLUE', 'YELLOW'];
+// Manually defined spinner segments (ordered clockwise from top)
+const segments = [
+  { color: 'GREEN', bodyPart: 'Right Hand' },
+  { color: 'YELLOW', bodyPart: 'Right Hand' },
+  { color: 'RED', bodyPart: 'Right Hand' },
+  { color: 'BLUE', bodyPart: 'Right Hand' },
+  { color: 'GREEN', bodyPart: 'Right Leg' },
+  { color: 'YELLOW', bodyPart: 'Right Leg' },
+  { color: 'RED', bodyPart: 'Right Leg' },
+  { color: 'BLUE', bodyPart: 'Right Leg' },
+  { color: 'GREEN', bodyPart: 'Left Leg' },
+  { color: 'YELLOW', bodyPart: 'Left Leg' },
+  { color: 'RED', bodyPart: 'Left Leg' },
+  { color: 'BLUE', bodyPart: 'Left Leg' },
+  { color: 'GREEN', bodyPart: 'Right Leg' },
+  { color: 'YELLOW', bodyPart: 'Right Leg' },
+  { color: 'RED', bodyPart: 'Right Leg' },
+  { color: 'BLUE', bodyPart: 'Right Leg' },
+]
 
 const Spinner = ({ onSpinComplete }) => {
   const [angle, setAngle] = useState(0);
@@ -11,39 +28,32 @@ const Spinner = ({ onSpinComplete }) => {
   const spin = () => {
     if (isSpinning) return;
 
-    const sections = 16;
-    const sectionAngle = 360 / sections;
-    const spins = 5;
+    const sectionCount = segments.length;
+    const sectionAngle = 360 / sectionCount;
+    const fullSpins = 5;
 
-    // Pick random segment
-    const selectedIndex = Math.floor(Math.random() * sections);
-
-    // Total spin rotation so selected lands at 0deg (top)
-    const totalRotation = spins * 360 + (360 - selectedIndex * sectionAngle);
+    const selectedIndex = Math.floor(Math.random() * sectionCount);
+    const targetAngle = 360 - selectedIndex * sectionAngle; // so selected lands at top
+    const totalRotation = fullSpins * 360 + targetAngle;
 
     setIsSpinning(true);
     setAngle((prev) => prev + totalRotation);
 
     setTimeout(() => {
-      const partIndex = Math.floor(selectedIndex / 4); // 0–3
-      const colorIndex = selectedIndex % 4;             // 0–3
-
-      const result = {
-        bodyPart: bodyParts[partIndex],
-        color: colors[colorIndex],
+      const selectedSegment = segments[selectedIndex];
+      onSpinComplete({
+        ...selectedSegment,
         index: selectedIndex
-      };
-
-      onSpinComplete(result);
+      });
       setIsSpinning(false);
-    }, 3000); // match transition time
+    }, 3000);
   };
 
   return (
     <div className="spinner-container">
-      <div className="spinner-pointer" />
+      {/* <div className="spinner-pointer" /> */}
       <div
-        className="spinner-wheel"
+        className={`spinner-wheel ${isSpinning ? 'spinning' : ''}`}
         style={{ transform: `rotate(${angle}deg)` }}
         onClick={spin}
       >
